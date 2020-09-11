@@ -25,6 +25,8 @@ public class ToySeller2 {
         cards.add(layouts.stepOneLayout(), Step.ONE.name());
         cards.add(layouts.stepTwoLayout(), Step.TWO.name());
         cards.add(layouts.stepThreeLayout(), Step.THREE.name());
+        cards.add(layouts.stepFourLayout(), Step.FOUR.name());
+        cards.add(layouts.finalLayout(), Step.FINAL.name());
     }
 
 

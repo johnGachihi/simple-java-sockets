@@ -1,13 +1,14 @@
 package client.ui;
 
 import client.SocketClient2;
-import client.ui.LayoutNavigation;
 import utils.Request;
 import utils.Step;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.http.HttpResponse;
+import java.util.UUID;
 
 public class Layouts {
     private final SocketClient2 socketClient2;
@@ -92,17 +93,44 @@ public class Layouts {
         jPanel.setBorder(
                 BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        JLabel inputLabel = new JLabel("Insert commar separated values for the toy's description, price, date of manufacture and batch number");
-        inputLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel descriptionLabel = new JLabel("Insert the toy's description.");
+        descriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JTextField inputField = new JTextField();
-        inputField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        inputField.setPreferredSize(new Dimension(400, 20));
+        JTextField descriptionTxt = new JTextField();
+        descriptionTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
+        descriptionTxt.setPreferredSize(new Dimension(400, 20));
+
+
+        JLabel priceLabel = new JLabel("Insert the toy's price.");
+        priceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField priceTxt = new JTextField();
+        priceTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
+        priceTxt.setPreferredSize(new Dimension(400, 20));
+
+
+        JLabel dateOfManufactureLabel = new JLabel("Insert the toy's date of manufacture.");
+        dateOfManufactureLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField dateOfManufactureTxt = new JTextField();
+        dateOfManufactureTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
+        dateOfManufactureTxt.setPreferredSize(new Dimension(400, 20));
+
+
+        JLabel batchNumberLabel = new JLabel("Insert the toy's batch number");
+        batchNumberLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField batchNumberTxt = new JTextField();
+        batchNumberTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
+        batchNumberTxt.setPreferredSize(new Dimension(400, 20));
 
         JButton submitBtn = new JButton("Submit");
         submitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         submitBtn.addActionListener(actionEvent -> {
-            String input = inputField.getText();
+            String input = descriptionTxt.getText() + ","
+                    + priceTxt.getText() + ","
+                    + dateOfManufactureTxt.getText() + ","
+                    + batchNumberTxt.getText();
             try {
                 Step nextStep = socketClient2.makeRequest(new Request(input));
                 layoutNavigation.moveTo(nextStep);
@@ -111,10 +139,30 @@ public class Layouts {
             }
         });
 
-        jPanel.add(inputLabel);
-        jPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        jPanel.add(inputField);
+        jPanel.add(descriptionLabel);
+        jPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        jPanel.add(descriptionTxt);
+
         jPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        jPanel.add(priceLabel);
+        jPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        jPanel.add(priceTxt);
+
+        jPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        jPanel.add(dateOfManufactureLabel);
+        jPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        jPanel.add(dateOfManufactureTxt);
+
+        jPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        jPanel.add(batchNumberLabel);
+        jPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        jPanel.add(batchNumberTxt);
+
+        jPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
         jPanel.add(submitBtn);
 
         return jPanel;
@@ -199,6 +247,62 @@ public class Layouts {
         jPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         jPanel.add(submitBtn);
+
+        return jPanel;
+    }
+
+    public JPanel stepFourLayout() {
+        JLabel uniqueCodeLabel = new JLabel("Insert unique thank you code");
+        uniqueCodeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JTextField uniqueCodeTxt = new JTextField();
+        uniqueCodeTxt.setAlignmentX(Component.CENTER_ALIGNMENT);
+        uniqueCodeTxt.setPreferredSize(new Dimension(400, 20));
+
+        JButton generateUniqueCodeBtn = new JButton("Generate Unique code");
+        generateUniqueCodeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        generateUniqueCodeBtn.addActionListener(actionEvent -> {
+            String uniqueCode = UUID.randomUUID().toString();
+            uniqueCodeTxt.setText(uniqueCode);
+        });
+
+        JButton submitBtn = new JButton("Submit");
+        submitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        submitBtn.addActionListener(actionEvent -> {
+            try {
+                socketClient2.makeRequest(new Request(uniqueCodeTxt.getText()));
+                layoutNavigation.moveTo(Step.FINAL);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
+        jPanel.setBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        jPanel.add(uniqueCodeLabel);
+        jPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        jPanel.add(uniqueCodeTxt);
+
+        jPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        jPanel.add(generateUniqueCodeBtn);
+
+        jPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        jPanel.add(submitBtn);
+
+        return jPanel;
+    }
+
+    public JPanel finalLayout() {
+        JPanel jPanel = new JPanel(new BorderLayout());
+        jPanel.setBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        jPanel.add(new JLabel("Process complete"));
 
         return jPanel;
     }
