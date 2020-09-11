@@ -1,4 +1,4 @@
-package client;
+package client.ui;
 
 import org.jetbrains.annotations.NotNull;
 import utils.Step;

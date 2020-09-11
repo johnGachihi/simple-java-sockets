@@ -1,13 +1,13 @@
-package client;
+package client.ui;
 
-import utils.Request;
+import client.ClientProtocol;
+import client.SocketClient2;
 import utils.Step;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ToySeller2 {
-//    private final SocketClient2 socketClient2;
     private final JFrame mainFrame;
     private final JPanel cards;
 
@@ -24,6 +24,7 @@ public class ToySeller2 {
         cards.add(layouts.stepZeroLayout(), Step.ZERO.name());
         cards.add(layouts.stepOneLayout(), Step.ONE.name());
         cards.add(layouts.stepTwoLayout(), Step.TWO.name());
+        cards.add(layouts.stepThreeLayout(), Step.THREE.name());
     }
 
 

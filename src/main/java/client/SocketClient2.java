@@ -31,6 +31,7 @@ public class SocketClient2 {
         if (serverSocket == null || ! serverSocket.isConnected()) {
             throw new Exception("Connection not established. Please call SocketClient2.connect()");
         }
+
         pout.println(request.getMessage());
 
         return clientProtocol.getStep((Response) oIn.readObject());
